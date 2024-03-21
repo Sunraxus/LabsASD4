@@ -13,6 +13,20 @@ struct Node {
 	Node() : _data(0), _left(nullptr), _right(nullptr) {};
 	Node(int data, Node* left, Node* right) : _data(data), _left(left), _right(right) {};
 	Node(int data) : _data(data), _left(nullptr), _right(nullptr) {};
+	
+	void print() const {
+		if (this->_left) {
+			cout << '(';
+			this->_left->print();
+			cout << ')';
+		}
+		cout << this->_data;
+		if (this->_right) {
+			cout << '(';
+			this->_right->print();
+			cout << ')';
+		}
+	}
 };
 
 class Tree {
@@ -116,17 +130,6 @@ private:
 		return ptr;
 	}
 	
-	void print(Node* ptr) {
-		if (ptr != nullptr) {
-			cout << ptr->_data << " ";
-			this->print(ptr->_left);
-			this->print(ptr->_right);
-		}
-		else {
-			cout << "- ";
-		}
-	}
-	
 	bool contains(Node* ptr, const int value) {
 		if (ptr == nullptr) {
 			return false;
@@ -182,9 +185,11 @@ public:
 		}
 	}
 	
-	void print() {
-		print(_root);
-		cout << endl;
+	void print() const {
+		if (this->_root)
+			this->_root->print();
+		else
+			cout << "The set is empty";
 	}
 	
 	bool contains(const int value) {
@@ -208,3 +213,22 @@ size_t lcg() {
 	return x;
 }
 
+vector<int> DuplicatesVector(vector<int>& input) {
+	Tree uniqueTree;
+	Tree duplicateTree;
+	vector<int> duplicates;
+
+	for (int value : input) {
+		if (uniqueTree.contains(value)) {
+			if (!duplicateTree.contains(value)) {
+				duplicateTree.insert(value);
+				duplicates.push_back(value);
+			}
+		}
+		else {
+			uniqueTree.insert(value);
+		}
+	}
+
+	return duplicates;
+}
