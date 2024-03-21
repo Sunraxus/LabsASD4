@@ -4,7 +4,11 @@ project ("LabsASD4")
 
 add_executable (LabsASD4 "LabsASD4.cpp" "LabsASD4.h")
 
-if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET LabsASD4 PROPERTY CXX_STANDARD 20)
+if(MSVC)
+    if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
+        string(REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    else()
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+    endif()
 endif()
 
