@@ -8,7 +8,7 @@
 
 using namespace std;
 
-/*template<typename Func>
+template<typename Func>
 double measure_time(Func func) {
     auto start = chrono::steady_clock::now();
     func();
@@ -119,7 +119,7 @@ double average_time(Func func, size_t num_attempts) {
 }
 
 void calc() {
-    const size_t num_attempts = 100;
+    const size_t num_attempts = 200;
     const size_t num_elements[] = { 1000, 10000, 100000 };
 
     for (size_t num : num_elements) {
@@ -143,11 +143,13 @@ void calc() {
             }, num_attempts * 10);
         cout << "Average add and remove time for " << num << " elements: " << add_remove_time << " sec" << endl;
     }
-}*/
-
+}
+using namespace std;
+using namespace std::chrono;
 int main()
 {
     setlocale(LC_ALL, "RUS");
+    
     //calc();
     Tree tree;
 
@@ -167,7 +169,7 @@ int main()
 
     cout << "Минимальное значение в дереве: " << tree.min() << endl; 
 
-    tree.erase(11);
+    tree.erase(7);
     tree.insert(8);
 
     cout << "Дерево после удаления: ";
@@ -177,7 +179,7 @@ int main()
 
     std::cout << "Дерево пустое? " << (tree.to_vector().empty() ? "Да" : "Нет") << std::endl;
 
-    vector<int> vec = { 1, 2, 3, 2, 4, 5, 3, 6, 7, 8, 8, 9 };
+    vector<int> vec = { 1, 2, 3, 8, 2, 4, 5, 3, 6, 7, 8, 8, 9 };
     vector<int> duplicates = DuplicatesVector(vec);
 
     cout << "Duplicates: ";

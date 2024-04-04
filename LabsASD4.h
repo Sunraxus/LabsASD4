@@ -73,7 +73,37 @@ private:
 		vec.push_back(ptr->_data);
 		to_vector(ptr->_left, vec);
 		to_vector(ptr->_right, vec);
-
+	}
+	
+	Node* insert(Node* ptr, const int value) {
+		if (ptr == nullptr) {
+			return new Node(value);
+		}
+		if (value < ptr->_data) {
+			ptr->_left = insert(ptr->_left, value);
+		}
+		else if (value > ptr->_data) {
+			ptr->_right = insert(ptr->_right, value);
+		}
+		else {
+			return ptr;
+		}
+		return ptr;
+	}
+	
+	bool contains(Node* ptr, const int value) {
+		if (ptr == nullptr) {
+			return false;
+		}
+		if (ptr->_data == value) {
+			return true;
+		}
+		if (value > ptr->_data) {
+			return contains(ptr->_right, value);
+		}
+		else {
+			return contains(ptr->_left, value);
+		}
 	}
 
 	Node* erase(Node* ptr, const int value) {
@@ -112,37 +142,6 @@ private:
 
 		}
 		return ptr;
-	}
-	
-	Node* insert(Node* ptr, const int value) {
-		if (ptr == nullptr) {
-			return new Node(value);
-		}
-		if (value < ptr->_data) {
-			ptr->_left = insert(ptr->_left, value);
-		}
-		else if (value > ptr->_data) {
-			ptr->_right = insert(ptr->_right, value);
-		}
-		else {
-			return ptr;
-		}
-		return ptr;
-	}
-	
-	bool contains(Node* ptr, const int value) {
-		if (ptr == nullptr) {
-			return false;
-		}
-		if (ptr->_data == value) {
-			return true;
-		}
-		if (value > ptr->_data) {
-			return contains(ptr->_right, value);
-		}
-		else {
-			return contains(ptr->_left, value);
-		}
 	}
 
 public:
@@ -213,12 +212,12 @@ size_t lcg() {
 	return x;
 }
 
-vector<int> DuplicatesVector(vector<int>& input) {
+vector<int> DuplicatesVector(vector<int>& vec) {
 	Tree uniqueTree;
 	Tree duplicateTree;
 	vector<int> duplicates;
 
-	for (int value : input) {
+	for (int value : vec) {
 		if (uniqueTree.contains(value)) {
 			if (!duplicateTree.contains(value)) {
 				duplicateTree.insert(value);
